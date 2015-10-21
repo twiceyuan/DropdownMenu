@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:weightSum="2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.twiceyuan.dropdown_menu.DropdownMenu
+        android:id="@+id/dm_dropdown"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:iconColor="dark"
+        app:titleText="Select Hero"
+        app:titleTextSize="16"/>
+
+    <com.twiceyuan.dropdown_menu.DropdownMenu
+        android:id="@+id/dm_dropdown2"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:iconColor="light"
+        app:titleBgColor="#444"
+        app:titleColor="#ffffff"
+        app:titleText="Select Color"
+        app:titleTextSize="16"
+        app:listBgColor="#444"/>
+
+</LinearLayout>
