@@ -2,12 +2,6 @@
 
 Use popup window to choose data as easy as ListView
 
-## Screenshot
-
-![1](screenshot/screenshot1.png)
-![2](screenshot/screenshot2.png)
-![3](screenshot/screenshot3.png)
-
 ## Usage
 
 layout code:
@@ -44,3 +38,9 @@ java code:
             }
         });
 ```
+
+## Screenshot
+
+![1](screenshot/screenshot1.png)
+![2](screenshot/screenshot2.png)
+![3](screenshot/screenshot3.png)
