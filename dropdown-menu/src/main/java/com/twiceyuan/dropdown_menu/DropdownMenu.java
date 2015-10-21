@@ -63,17 +63,30 @@ public class DropdownMenu extends LinearLayout {
         mContext = context;
         // 初始化属性
         TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.DropdownMenu);
-        String titleText = attributes.getString(R.styleable.DropdownMenu_titleText);
-        float textSize = attributes.getFloat(R.styleable.DropdownMenu_titleTextSize, 15f);
+        String titleText = attributes.getString(
+                R.styleable.DropdownMenu_titleText);
+        float textSize = attributes.getFloat(
+                R.styleable.DropdownMenu_titleTextSize, 15f);
         //noinspection deprecation
-        int textColor = attributes.getColor(R.styleable.DropdownMenu_titleColor, context.getResources().getColor(android.R.color.background_dark));
+        int textColor = attributes.getColor(
+                R.styleable.DropdownMenu_titleColor,
+                context.getResources().getColor(android.R.color.background_dark));
         //noinspection deprecation
-        int titleBgColor = attributes.getColor(R.styleable.DropdownMenu_titleBgColor, mContext.getResources().getColor(R.color.grey));
-        int collapseIcon = attributes.getResourceId(R.styleable.DropdownMenu_iconCollapse, R.drawable.ic_expand_less_black_24dp);
-        int expandedIcon = attributes.getResourceId(R.styleable.DropdownMenu_iconExpanded, R.drawable.ic_expand_more_black_24dp);
+        int titleBgColor = attributes.getColor(
+                R.styleable.DropdownMenu_titleBgColor,
+                mContext.getResources().getColor(R.color.grey));
+        int collapseIcon = attributes.getResourceId(
+                R.styleable.DropdownMenu_iconCollapse,
+                R.drawable.ic_expand_less_black_24dp);
+        int expandedIcon = attributes.getResourceId(
+                R.styleable.DropdownMenu_iconExpanded,
+                R.drawable.ic_expand_more_black_24dp);
         //noinspection deprecation
-        int listBgColor = attributes.getColor(R.styleable.DropdownMenu_listBgColor, mContext.getResources().getColor(android.R.color.white));
-        final int iconStyle = attributes.getInt(R.styleable.DropdownMenu_iconColor, 1);
+        int listBgColor = attributes.getColor(
+                R.styleable.DropdownMenu_listBgColor,
+                mContext.getResources().getColor(android.R.color.white));
+        final int iconStyle = attributes.getInt(
+                R.styleable.DropdownMenu_iconColor, 1);
         if (iconStyle == 0) {
             collapseIcon = R.drawable.ic_expand_more_white_24dp;
             expandedIcon = R.drawable.ic_expand_less_white_24dp;
@@ -88,7 +101,7 @@ public class DropdownMenu extends LinearLayout {
         attributes.recycle();
 
         View popWindows = LayoutInflater.from(mContext)
-                .inflate(R.layout.popupwindow_menu, (ViewGroup) getParent(), false);
+                .inflate(R.layout.dropdown_menu_popupwindow, (ViewGroup) getParent(), false);
         mPopupWindow = new PopupWindow(popWindows, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true);
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         setOrientation(HORIZONTAL);

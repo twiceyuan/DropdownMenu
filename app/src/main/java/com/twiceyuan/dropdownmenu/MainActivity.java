@@ -16,16 +16,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DropdownMenu menu1 = (DropdownMenu) findViewById(R.id.dm_dropdown);
-        final String[] strings = new String[]{"Iron Man", "Ant Man", "American Captain", "Hulk"};
-        menu1.setAdapter(new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_dropdown_item_1line,
-                strings
-        ));
+        final String[] hero = new String[]{
+                "Iron Man", "Ant Man", "American Captain",
+                "Hulk", "Thor", "Black Widow"};
+        menu1.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, hero));
         menu1.setOnItemClickListener(new OnDropdownItemClickListener() {
             @Override
             public void onClick(int position) {
-                Toast.makeText(getApplicationContext(), strings[position], Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), hero[position], Toast.LENGTH_SHORT).show();
             }
         });
 

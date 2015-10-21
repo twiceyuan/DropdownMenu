@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <ListView
+    <com.twiceyuan.dropdown_menu.MaxHeightListView
         android:id="@+id/lv_menu"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:background="#ffffff"
         android:scrollbarStyle="outsideOverlay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="wrap_content"
+        app:maxHeight="300"/>
 
     <RelativeLayout
         android:id="@+id/rl_menu_shadow"
         android:layout_below="@id/lv_menu"
         android:layout_width="match_parent"
-        android:background="#70000000"
-        android:layout_height="match_parent">
-    </RelativeLayout>
+        android:background="#60000000"
+        android:minHeight="100dp"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
