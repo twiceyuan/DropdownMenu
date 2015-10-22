@@ -12,10 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -37,6 +35,7 @@ public class DropdownMenu extends LinearLayout {
     private OnDropdownItemClickListener mItemClickListener;
     private TextView textView;
     private ImageView iconView;
+    private DropdownAdapter mDropdownAdapter;
 
     public DropdownMenu(Context context) {
         super(context);
@@ -103,13 +102,15 @@ public class DropdownMenu extends LinearLayout {
         View popWindows = LayoutInflater.from(mContext)
                 .inflate(R.layout.dropdown_menu_popupwindow, (ViewGroup) getParent(), false);
         mPopupWindow = new PopupWindow(popWindows, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true);
+        mPopupWindow.setOutsideTouchable(false);
+        mPopupWindow.setFocusable(false);
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         setOrientation(HORIZONTAL);
         setBackgroundColor(titleBgColor);
         setGravity(Gravity.CENTER);
         mListView = (ListView) popWindows.findViewById(R.id.lv_menu);
         mListView.setBackgroundColor(listBgColor);
-        mListView.setAdapter(new ArrayAdapter<>(
+        mListView.setAdapter(mDropdownAdapter = new ArrayDropdownAdapter(
                 mContext,
                 android.R.layout.simple_dropdown_item_1line,
                 new String[]{"请配置 DropdownMenu 的 Adapter"}));
@@ -126,6 +127,7 @@ public class DropdownMenu extends LinearLayout {
                 if (mItemClickListener != null) {
                     mItemClickListener.onClick(position);
                 }
+                textView.setText(mDropdownAdapter.getTitleString(position));
                 mPopupWindow.dismiss();
             }
         });
@@ -157,17 +159,31 @@ public class DropdownMenu extends LinearLayout {
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPopupWindow.showAsDropDown(DropdownMenu.this);
-                iconView.setImageResource(iconExpanded);
+                if (mPopupWindow.isShowing()) {
+                    mPopupWindow.dismiss();
+                    iconView.setImageResource(iconCollapse);
+                } else {
+                    mPopupWindow.showAsDropDown(DropdownMenu.this);
+                    iconView.setImageResource(iconExpanded);
+                }
             }
         });
     }
 
-    public void setAdapter(ListAdapter adapter) {
-        mListView.setAdapter(adapter);
+    public void setAdapter(DropdownAdapter adapter) {
+        mListView.setAdapter(mDropdownAdapter = adapter);
     }
 
     public void setOnItemClickListener(OnDropdownItemClickListener listener) {
         this.mItemClickListener = listener;
+    }
+
+    /**
+     * 设置默认标题文字
+     *
+     * @param title 内容
+     */
+    public void setTitle(String title) {
+        textView.setText(title);
     }
 }

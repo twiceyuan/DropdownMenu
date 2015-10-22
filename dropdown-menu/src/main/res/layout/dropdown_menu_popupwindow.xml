@@ -13,7 +13,7 @@
         android:scrollbarStyle="outsideOverlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:maxHeight="300"/>
+        app:maxHeight="300dp"/>
 
     <RelativeLayout
         android:id="@+id/rl_menu_shadow"

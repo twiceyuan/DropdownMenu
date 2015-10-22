@@ -14,6 +14,6 @@
         <attr name="listBgColor" format="color"/>
     </declare-styleable>
     <declare-styleable name="MaxHeightListView">
-        <attr name="maxHeight" format="integer"/>
+        <attr name="maxHeight" format="dimension"/>
     </declare-styleable>
 </resources> 

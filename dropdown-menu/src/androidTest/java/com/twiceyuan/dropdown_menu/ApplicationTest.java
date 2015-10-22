@@ -1,4 +1,4 @@
-package com.twiceyuan.dropdownMenu;
+package com.twiceyuan.dropdown_menu;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
