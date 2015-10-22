@@ -2,6 +2,12 @@
 
 Use popup window to choose data as easy as ListView
 
+## update 1.0.2
+
+1. 选择其中一项后改变标题文字（需要适配器实现 DropdownAdapter 接口）
+2. 在 PopupWindow 打开时点击标题收起
+3. Java 中设置默认标题文字
+
 ## Usage
 
 layout code:
