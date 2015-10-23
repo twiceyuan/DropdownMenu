@@ -36,6 +36,7 @@ public class DropdownMenu extends LinearLayout {
     private TextView textView;
     private ImageView iconView;
     private DropdownAdapter mDropdownAdapter;
+    private OnClickListener mSecondClickListener;
 
     public DropdownMenu(Context context) {
         super(context);
@@ -156,7 +157,7 @@ public class DropdownMenu extends LinearLayout {
             }
         });
 
-        setOnClickListener(new OnClickListener() {
+        super.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mPopupWindow.isShowing()) {
@@ -165,6 +166,9 @@ public class DropdownMenu extends LinearLayout {
                 } else {
                     mPopupWindow.showAsDropDown(DropdownMenu.this);
                     iconView.setImageResource(iconExpanded);
+                }
+                if (mSecondClickListener != null) {
+                    mSecondClickListener.onClick(DropdownMenu.this);
                 }
             }
         });
@@ -185,5 +189,34 @@ public class DropdownMenu extends LinearLayout {
      */
     public void setTitle(String title) {
         textView.setText(title);
+    }
+
+    /**
+     * 下拉菜单是否在显示
+     */
+    public boolean isDropdown() {
+        return mPopupWindow != null && mPopupWindow.isShowing();
+    }
+
+    /**
+     * 如果存在，展开
+     */
+    public void expand() {
+        if (mPopupWindow != null) {
+            mPopupWindow.showAsDropDown(this);
+        }
+    }
+
+    /**
+     * 如果存在，收起
+     */
+    public void collapse() {
+        if (mPopupWindow != null) {
+            mPopupWindow.dismiss();
+        }
+    }
+
+    public void addOnClickListener(OnClickListener l) {
+        mSecondClickListener = l;
     }
 }

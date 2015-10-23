@@ -2,6 +2,11 @@
 
 Use popup window to choose data as easy as ListView
 
+## update 1.0.3
+
+1. 添加手动弹出和关闭的方法
+2. 添加管理工具类来实现同时只允许一个窗口为弹出状态
+
 ## update 1.0.2
 
 1. 选择其中一项后改变标题文字（需要适配器实现 DropdownAdapter 接口）
@@ -43,6 +48,25 @@ java code:
                 Toast.makeText(getApplicationContext(), strings[position], Toast.LENGTH_SHORT).show();
             }
         });
+
+        // At the same time only allows a window pops up
+        MenuManager.single(menu1, menu2);
+```
+
+```groovy
+repositories {
+    maven { url 'https://raw.githubusercontent.com/twiceyuan/DropdownMenu/master/repository' }
+    flatDir {
+        dirs 'aars'
+    }
+}
+
+dependencies {
+    //...
+    compile 'com.twiceyuan.dropdown-menu:dropdown-menu:1.0.3'
+    //...
+}
+
 ```
 
 ## Screenshot
