@@ -3,6 +3,7 @@ package com.twiceyuan.dropdown_menu;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -14,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,7 +29,7 @@ public class DropdownMenu extends LinearLayout {
     @SuppressWarnings("FieldCanBeLocal")
     private Context mContext;
     private PopupWindow mPopupWindow;
-    private ListView mListView;
+    private MaxHeightListView mListView;
     @SuppressWarnings("FieldCanBeLocal")
     private RelativeLayout mShadowLayout;
     private OnDropdownItemClickListener mItemClickListener;
@@ -100,22 +100,28 @@ public class DropdownMenu extends LinearLayout {
 
         attributes.recycle();
 
-        View popWindows = LayoutInflater.from(mContext)
-                .inflate(R.layout.dropdown_menu_popupwindow, (ViewGroup) getParent(), false);
-        mPopupWindow = new PopupWindow(popWindows, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, true);
-        mPopupWindow.setOutsideTouchable(false);
-        mPopupWindow.setFocusable(false);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupWindow = inflater.inflate(R.layout.dropdown_menu_popupwindow, (ViewGroup) getParent(), false);
+
+        mPopupWindow = new PopupWindow(popupWindow, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, true);
+
+        mPopupWindow.setTouchable(true);
+        mPopupWindow.setOutsideTouchable(true);
+        // 不加这个在低版本（测试了 4.1）上会有外部点击事件不会响应的问题
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         setOrientation(HORIZONTAL);
         setBackgroundColor(titleBgColor);
         setGravity(Gravity.CENTER);
-        mListView = (ListView) popWindows.findViewById(R.id.lv_menu);
+
+        mListView = (MaxHeightListView) popupWindow.findViewById(R.id.lv_menu);
         mListView.setBackgroundColor(listBgColor);
         mListView.setAdapter(mDropdownAdapter = new ArrayDropdownAdapter(
                 mContext,
                 android.R.layout.simple_dropdown_item_1line,
                 new String[]{"请配置 DropdownMenu 的 Adapter"}));
-        mShadowLayout = (RelativeLayout) popWindows.findViewById(R.id.rl_menu_shadow);
+        mShadowLayout = (RelativeLayout) popupWindow.findViewById(R.id.rl_menu_shadow);
         mShadowLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,6 +171,7 @@ public class DropdownMenu extends LinearLayout {
                     iconView.setImageResource(iconCollapse);
                 } else {
                     mPopupWindow.showAsDropDown(DropdownMenu.this);
+                    mPopupWindow.setOutsideTouchable(true);
                     iconView.setImageResource(iconExpanded);
                 }
                 if (mSecondClickListener != null) {

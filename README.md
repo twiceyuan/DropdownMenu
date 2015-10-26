@@ -2,6 +2,10 @@
 
 Use popup window to choose data as easy as ListView
 
+## update 1.0.4
+
+解决在低版本上面点击事件不响应的问题。
+
 ## update 1.0.3
 
 1. 添加手动弹出和关闭的方法
