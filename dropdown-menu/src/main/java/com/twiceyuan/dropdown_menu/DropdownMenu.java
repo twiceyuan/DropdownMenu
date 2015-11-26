@@ -147,10 +147,10 @@ public class DropdownMenu extends LinearLayout {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         textView.setTextColor(textColor);
         textView.setBackgroundColor(titleBgColor);
-        textView.setPadding(20, 20, 20, 20);
+        textView.setPadding(20, 0, 20, 0);
         textView.setGravity(Gravity.CENTER);
         iconView = new ImageView(context);
-        iconView.setPadding(20, 20, 20, 20);
+        iconView.setPadding(20, 0, 20, 0);
         iconView.setImageResource(collapseIcon);
 
         addView(textView);

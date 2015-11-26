@@ -1,1 +1,1 @@
-mvn install:install-file -DgroupId=com.twiceyuan.dropdown-menu -DartifactId=dropdown-menu -Dversion=1.0.4 -Dfile=dropdown-menu/build/outputs/aar/dropdown-menu-release.aar -Dpackaging=aar -DgeneratePom=true -DlocalRepositoryPath=repository -DcreateChecksum=true
+mvn install:install-file -DgroupId=com.twiceyuan.dropdown-menu -DartifactId=dropdown-menu -Dversion=1.0.5 -Dfile=dropdown-menu/build/outputs/aar/dropdown-menu-release.aar -Dpackaging=aar -DgeneratePom=true -DlocalRepositoryPath=repository -DcreateChecksum=true
