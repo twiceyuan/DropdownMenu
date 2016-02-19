@@ -3,7 +3,7 @@
 
 基于 ListView 和 PopupWindow 实现的下拉菜单，可以方便的配置样式和填充数据。
 
-![截图](art/screenshot.jpg)
+<center>![截图](art/screenshot.jpg =250x)</center>
 
 ## 使用
 
