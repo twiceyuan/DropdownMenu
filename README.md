@@ -7,7 +7,7 @@
 
 ## 使用
 
-layout:
+Layout 代码:
 
 ```xml
 <com.twiceyuan.dropdownmenu.DropdownMenu
@@ -22,7 +22,7 @@ layout:
     dm:titleTextSize="14"/>
 ```
 
-java:
+Java 代码:
 
 ```java
 DropdownMenu menu = (DropdownMenu) findViewById(R.id.dm_dropdown);
