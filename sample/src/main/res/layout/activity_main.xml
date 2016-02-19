@@ -16,21 +16,21 @@
         android:layout_weight="1"
         dm:highlightColor="@color/colorPrimary"
         dm:iconColor="#777"
-        dm:titleBgColor="#ccc"
+        dm:titleBgColor="#eee"
         dm:titleText="Select Hero"
         dm:titleTextSize="14"/>
 
     <LinearLayout
         android:layout_width="1dp"
         android:layout_height="40dp"
-        android:background="#ccc">
+        android:background="#eee">
 
         <View
             android:layout_width="1dp"
             android:layout_height="32dp"
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
-            android:background="#aaa"/>
+            android:background="#ccc"/>
 
     </LinearLayout>
 
@@ -42,7 +42,7 @@
         dm:highlightColor="@color/colorPrimary"
         dm:iconColor="#777"
         dm:listBgColor="#444"
-        dm:titleBgColor="#ccc"
+        dm:titleBgColor="#eee"
         dm:titleColor="#222"
         dm:titleText="Select Color"
         dm:titleTextSize="14"/>
