@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <declare-styleable name="DropdownMenu">
         <attr name="titleText" format="string"/>
         <attr name="titleTextSize" format="float"/>
@@ -7,13 +8,12 @@
         <attr name="titleBgColor" format="color"/>
         <attr name="iconExpanded" format="reference"/>
         <attr name="iconCollapse" format="reference"/>
-        <attr name="iconColor" format="integer">
-            <enum name="dark" value="1"/>
-            <enum name="light" value="0"/>
-        </attr>
+        <attr name="iconColor" format="color"/>
         <attr name="listBgColor" format="color"/>
+        <attr name="highlightColor" format="color"/>
     </declare-styleable>
-    <declare-styleable name="MaxHeightListView">
+
+    <declare-styleable name="FixedHeightListView">
         <attr name="maxHeight" format="dimension"/>
     </declare-styleable>
-</resources> 
+</resources>
