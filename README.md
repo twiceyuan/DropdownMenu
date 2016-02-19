@@ -2,9 +2,9 @@
 
 基于 ListView 和 PopupWindow 实现的下拉菜单，可以方便的配置样式和填充数据。
 
-![截图](art/screenshot.png)
+![截图](art/screenshot.jpg)
 
-## Usage
+## 使用
 
 layout:
 
@@ -35,6 +35,8 @@ menu.setOnItemClickListener(new OnDropdownItemClickListener() {
 // 同时只允许一个 DropdownMenu 为打开状态
 MenuManager.group(menu, menu2);
 ```
+
+## 依赖
 
 ```groovy
 allprojects {
