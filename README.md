@@ -1,4 +1,5 @@
-# DropdownMenu View
+# DropdownMenu View 
+[![](https://jitpack.io/v/twiceyuan/DropdownMenu.svg)](https://jitpack.io/#twiceyuan/DropdownMenu)
 
 基于 ListView 和 PopupWindow 实现的下拉菜单，可以方便的配置样式和填充数据。
 
