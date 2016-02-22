@@ -1,50 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/container"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dm="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:weightSum="2"
-    tools:context=".SampleActivity">
-
-    <com.twiceyuan.dropdownmenu.DropdownMenu
-        android:id="@+id/dm_dropdown"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        dm:highlightColor="@color/colorPrimary"
-        dm:iconColor="#777"
-        dm:titleBgColor="#eee"
-        dm:titleText="Select Hero"
-        dm:titleTextSize="14"/>
-
-    <LinearLayout
-        android:layout_width="1dp"
-        android:layout_height="40dp"
-        android:background="#eee">
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="32dp"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp"
-            android:background="#ccc"/>
-
-    </LinearLayout>
-
-    <com.twiceyuan.dropdownmenu.DropdownMenu
-        android:id="@+id/dm_dropdown2"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        dm:highlightColor="@color/colorPrimary"
-        dm:iconColor="#777"
-        dm:listBgColor="#444"
-        dm:titleBgColor="#eee"
-        dm:titleColor="#222"
-        dm:titleText="Select Color"
-        dm:titleTextSize="14"/>
-
-</LinearLayout>
+    tools:context=".SampleActivity"/>

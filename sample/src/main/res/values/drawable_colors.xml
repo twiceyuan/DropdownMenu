@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <drawable name="white">#fff</drawable>
+    <drawable name="light_gray">#eee</drawable>
     <drawable name="gray">#ccc</drawable>
+    <drawable name="translate">#00000000</drawable>
     <drawable name="dark_gray">#444</drawable>
     <drawable name="primaryColor">@color/colorPrimary</drawable>
 </resources>

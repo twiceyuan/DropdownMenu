@@ -9,12 +9,12 @@ import android.widget.ListView;
 
 /**
  * Created by twiceYuan on 10/21/15.
- *
+ * <p/>
  * 可以设置最大高度的 ListView
  */
 public class FixedHeightListView extends ListView {
 
-    private int mMaxHeight = 300;
+    private int mMaxHeight = 0;
 
     public FixedHeightListView(Context context) {
         super(context);
@@ -39,12 +39,13 @@ public class FixedHeightListView extends ListView {
 
     public void setMaxHeight(int maxHeight) {
         this.mMaxHeight = maxHeight;
+        invalidate();
     }
 
     private void init(@SuppressWarnings("UnusedParameters") Context context, AttributeSet attrs) {
         // 初始化属性
         TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.FixedHeightListView);
-        mMaxHeight = attributes.getDimensionPixelOffset(R.styleable.FixedHeightListView_maxHeight, 300);
+        mMaxHeight = attributes.getDimensionPixelOffset(R.styleable.FixedHeightListView_maxHeight, dp2px(300));
         attributes.recycle();
     }
 
@@ -52,5 +53,10 @@ public class FixedHeightListView extends ListView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(mMaxHeight, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    public int dp2px(int dp) {
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5f);
     }
 }

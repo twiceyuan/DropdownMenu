@@ -12,7 +12,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -70,23 +73,20 @@ public class DropdownMenu extends RelativeLayout {
         TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.DropdownMenu);
         String titleText = attributes.getString(
                 R.styleable.DropdownMenu_titleText);
-        float textSize = attributes.getFloat(
-                R.styleable.DropdownMenu_titleTextSize, 15f);
-        //noinspection deprecation
+        float textSize = attributes.getDimensionPixelSize(
+                R.styleable.DropdownMenu_titleTextSize, 0);
         final int textColor = attributes.getColor(
                 R.styleable.DropdownMenu_titleColor,
-                context.getResources().getColor(android.R.color.background_dark));
-        //noinspection deprecation
+                0xff000000);
         int titleBgColor = attributes.getColor(
                 R.styleable.DropdownMenu_titleBgColor,
-                0xccc);
-        //noinspection deprecation
+                0xffcccccc);
         int listBgColor = attributes.getColor(
                 R.styleable.DropdownMenu_listBgColor,
-                mContext.getResources().getColor(android.R.color.white));
+                0x00ffffff);
         final int iconColor = attributes.getColor(
                 R.styleable.DropdownMenu_iconColor,
-                0xccc);
+                0xffcccccc);
         final int highLightColor = attributes.getColor(
                 R.styleable.DropdownMenu_highlightColor,
                 NO_HIGHLIGHT);
@@ -98,8 +98,12 @@ public class DropdownMenu extends RelativeLayout {
 
         attributes.recycle();
 
+        setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        setBackgroundColor(titleBgColor);
+        setGravity(Gravity.CENTER);
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupWindow = inflater.inflate(R.layout.ddm_popupwindow, (ViewGroup) getParent(), false);
+        View popupWindow = inflater.inflate(R.layout.ddm_popup_list, (ViewGroup) getParent(), false);
 
         mPopupWindow = new PopupWindow(popupWindow, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, true);
 
@@ -109,10 +113,6 @@ public class DropdownMenu extends RelativeLayout {
         // 不加这个在低版本（测试了 4.1）上会有外部点击事件不会响应的问题
         //noinspection deprecation
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-
-        setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        setBackgroundColor(titleBgColor);
-        setGravity(Gravity.CENTER);
 
         mListView = (FixedHeightListView) popupWindow.findViewById(R.id.lv_menu);
         mListView.setBackgroundColor(listBgColor);
@@ -146,11 +146,13 @@ public class DropdownMenu extends RelativeLayout {
         textView.setLayoutParams(titleParams);
 
         textView.setText(TextUtils.isEmpty(titleText) ? "[未配置]" : titleText);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         textView.setTextColor(textColor);
         textView.setBackgroundColor(titleBgColor);
         textView.setPadding(20, 0, 32, 0);
         textView.setGravity(Gravity.CENTER);
+        if (textSize > 0) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        }
 
         LayoutParams iconParams = new LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -204,6 +206,36 @@ public class DropdownMenu extends RelativeLayout {
 
     public void setOnItemClickListener(final OnDropdownItemClickListener listener) {
         mItemClickListener = listener;
+    }
+
+    /**
+     * 配置自定义 View，比如多级联动或者网格选择的，将最终返回结果的 AbsListView 传进来并设置回调监听
+     *
+     * @param customView 自定义内容区域
+     * @param listener   选中监听器
+     */
+    public void setCustomView(
+            final ViewGroup contentView,
+            final AbsListView customView,
+            final OnDropdownItemClickListener listener) {
+
+        LinearLayout container = (LinearLayout) mPopupWindow.getContentView().findViewById(R.id.container);
+
+        container.removeAllViews();
+        container.addView(contentView);
+
+        customView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                listener.onItemClick(parent, view, position, id);
+                if (mPopupWindow != null && mPopupWindow.isShowing()) {
+                    Adapter adapter = parent.getAdapter();
+                    if (adapter instanceof ArrayDropdownAdapter) {
+                        setTitle(((ArrayDropdownAdapter) adapter).getTitleString(position));
+                    }
+                    mPopupWindow.dismiss();
+                }
+            }
+        });
     }
 
     /**
