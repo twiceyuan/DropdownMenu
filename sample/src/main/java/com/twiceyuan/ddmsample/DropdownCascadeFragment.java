@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.twiceyuan.ddmsample.widget.CascadeView;
+import com.twiceyuan.dropdownmenu.widget.CascadeView;
 import com.twiceyuan.dropdownmenu.ArrayDropdownAdapter;
 import com.twiceyuan.dropdownmenu.DropdownMenu;
 import com.twiceyuan.dropdownmenu.OnDropdownItemClickListener;
