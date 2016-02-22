@@ -88,7 +88,7 @@ public class DropdownMenu extends RelativeLayout {
                 R.styleable.DropdownMenu_iconColor,
                 0xffcccccc);
         final int highLightColor = attributes.getColor(
-                R.styleable.DropdownMenu_highlightColor,
+                R.styleable.DropdownMenu_titleHighLight,
                 NO_HIGHLIGHT);
 
         iconView = new FontIcon(mContext);

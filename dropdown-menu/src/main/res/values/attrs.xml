@@ -8,7 +8,7 @@
     <attr name="iconExpanded" format="reference"/>
     <attr name="iconCollapse" format="reference"/>
     <attr name="iconColor" format="color"/>
-    <attr name="highlightColor" format="color"/>
+    <attr name="titleHighLight" format="color"/>
 
     <declare-styleable name="DropdownMenu">
         <attr name="titleText"/>
@@ -19,21 +19,11 @@
         <attr name="iconCollapse"/>
         <attr name="iconColor"/>
         <attr name="listBgColor" format="color"/>
-        <attr name="highlightColor"/>
-    </declare-styleable>
-
-    <declare-styleable name="DropdownPane">
-        <attr name="titleText"/>
-        <attr name="titleTextSize"/>
-        <attr name="titleColor"/>
-        <attr name="titleBgColor"/>
-        <attr name="iconExpanded"/>
-        <attr name="iconCollapse"/>
-        <attr name="iconColor"/>
-        <attr name="highlightColor"/>
+        <attr name="titleHighLight"/>
     </declare-styleable>
 
     <declare-styleable name="FixedHeightListView">
         <attr name="maxHeight" format="dimension"/>
     </declare-styleable>
+
 </resources>

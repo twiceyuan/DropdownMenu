@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            dm:highlightColor="@color/colorPrimary"
+            dm:titleHighLight="@color/colorPrimary"
             dm:iconColor="#aaa"
             dm:listBgColor="#fff"
             dm:titleBgColor="#eee"
