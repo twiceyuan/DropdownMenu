@@ -49,11 +49,15 @@ allprojects {
 }
 
 dependencies {
-    compile 'com.github.twiceyuan:DropdownMenu:1.1.0'
+    compile 'com.github.twiceyuan:DropdownMenu:1.1.1'
 }
 ```
 
 ## 更新日志
+
+### update 1.1.1
+
+添加自定义下拉布局的支持，添加二级联动的例子
 
 ### update 1.1.0
 
