@@ -229,8 +229,8 @@ public class DropdownMenu extends RelativeLayout {
                 listener.onItemClick(parent, view, position, id);
                 if (mPopupWindow != null && mPopupWindow.isShowing()) {
                     Adapter adapter = parent.getAdapter();
-                    if (adapter instanceof ArrayDropdownAdapter) {
-                        setTitle(((ArrayDropdownAdapter) adapter).getTitleString(position));
+                    if (adapter instanceof DropdownAdapter) {
+                        setTitle(((DropdownAdapter) adapter).getTitleString(position));
                     }
                     mPopupWindow.dismiss();
                 }
