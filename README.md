@@ -49,11 +49,16 @@ allprojects {
 }
 
 dependencies {
-    compile 'com.github.twiceyuan:DropdownMenu:1.1.1'
+    compile 'com.github.twiceyuan:DropdownMenu:1.1.3'
 }
 ```
 
 ## 更新日志
+
+### update 1.1.3
+
+1. 添加 library 中的源码
+2. 修复选择后获取不到 title 的问题
 
 ### update 1.1.1
 
