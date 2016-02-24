@@ -41,8 +41,8 @@ public class DropdownMenu extends RelativeLayout {
     private DropdownAdapter             mDropdownAdapter;
     private OnClickListener             mSecondClickListener;
 
-    private static final String ICON_LESS = "\ue5ce";
-    private static final String ICON_MORE = "\ue5cf";
+    private static final String ICON_DOWN = "\ue5c5";
+    private static final String ICON_UP   = "\ue5c7";
 
     private static final int NO_HIGHLIGHT = -1; // 没有设置高亮色时的默认值
 
@@ -94,7 +94,7 @@ public class DropdownMenu extends RelativeLayout {
         iconView = new FontIcon(mContext);
         iconView.setTextColor(iconColor);
         iconView.setGravity(Gravity.CENTER);
-        iconView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        iconView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 
         attributes.recycle();
 
@@ -119,7 +119,7 @@ public class DropdownMenu extends RelativeLayout {
         mListView.setAdapter(mDropdownAdapter = new ArrayDropdownAdapter(
                 mContext,
                 android.R.layout.simple_dropdown_item_1line,
-                new String[]{"no data"}));
+                new String[]{"Empty"}));
         mShadowLayout = (RelativeLayout) popupWindow.findViewById(R.id.rl_menu_shadow);
         mShadowLayout.setOnClickListener(new OnClickListener() {
             @Override
@@ -145,7 +145,7 @@ public class DropdownMenu extends RelativeLayout {
         titleParams.addRule(CENTER_IN_PARENT, TRUE);
         textView.setLayoutParams(titleParams);
 
-        textView.setText(TextUtils.isEmpty(titleText) ? "[未配置]" : titleText);
+        textView.setText(TextUtils.isEmpty(titleText) ? "<请选择>" : titleText);
         textView.setTextColor(textColor);
         textView.setBackgroundColor(titleBgColor);
         textView.setPadding(20, 0, 32, 0);
@@ -155,13 +155,14 @@ public class DropdownMenu extends RelativeLayout {
         }
 
         LayoutParams iconParams = new LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         iconParams.addRule(ALIGN_PARENT_RIGHT, TRUE);
         iconParams.addRule(CENTER_VERTICAL, TRUE);
         iconView.setLayoutParams(iconParams);
 
-        iconView.setPadding(20, 8, 32, 0);
-        iconView.setText(ICON_LESS);
+        iconView.setPadding(20, 12, 32, 0);
+        iconView.setGravity(Gravity.CENTER);
+        iconView.setText(ICON_UP);
 
         addView(textView);
         addView(iconView);
@@ -169,7 +170,7 @@ public class DropdownMenu extends RelativeLayout {
         mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                iconView.setText(ICON_LESS);
+                iconView.setText(ICON_UP);
                 iconView.setTextColor(iconColor);
                 textView.setTextColor(textColor);
             }
@@ -180,13 +181,13 @@ public class DropdownMenu extends RelativeLayout {
             public void onClick(View v) {
                 if (mPopupWindow.isShowing()) {
                     mPopupWindow.dismiss();
-                    iconView.setText(ICON_LESS);
+                    iconView.setText(ICON_UP);
                     iconView.setTextColor(iconColor);
                     textView.setTextColor(textColor);
                 } else {
                     mPopupWindow.showAsDropDown(DropdownMenu.this);
                     mPopupWindow.setOutsideTouchable(true);
-                    iconView.setText(ICON_MORE);
+                    iconView.setText(ICON_DOWN);
 
                     if (highLightColor != -1) {
                         iconView.setTextColor(highLightColor);
