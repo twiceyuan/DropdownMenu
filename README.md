@@ -3,6 +3,8 @@
 
 基于 ListView 和 PopupWindow 实现的下拉菜单，可以方便的配置样式和填充数据。
 
+（work in process: 本项目为学习使用，不保证使用稳定性，请慎重使用。）
+
 <p align="center">
     <img src="art/screenshot.png" alt="screenshot" style="width: 200px;"/>
 </p>
@@ -49,11 +51,15 @@ allprojects {
 }
 
 dependencies {
-    compile 'com.github.twiceyuan:DropdownMenu:1.1.3'
+    compile 'com.github.twiceyuan:DropdownMenu:1.1.5'
 }
 ```
 
 ## 更新日志
+
+### update 1.1.5
+
+切换图标，调整细节
 
 ### update 1.1.3
 

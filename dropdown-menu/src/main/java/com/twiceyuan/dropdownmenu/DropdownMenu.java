@@ -162,7 +162,7 @@ public class DropdownMenu extends RelativeLayout {
 
         iconView.setPadding(20, 12, 32, 0);
         iconView.setGravity(Gravity.CENTER);
-        iconView.setText(ICON_UP);
+        iconView.setText(ICON_DOWN);
 
         addView(textView);
         addView(iconView);
@@ -170,7 +170,7 @@ public class DropdownMenu extends RelativeLayout {
         mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                iconView.setText(ICON_UP);
+                iconView.setText(ICON_DOWN);
                 iconView.setTextColor(iconColor);
                 textView.setTextColor(textColor);
             }
@@ -181,13 +181,13 @@ public class DropdownMenu extends RelativeLayout {
             public void onClick(View v) {
                 if (mPopupWindow.isShowing()) {
                     mPopupWindow.dismiss();
-                    iconView.setText(ICON_UP);
+                    iconView.setText(ICON_DOWN);
                     iconView.setTextColor(iconColor);
                     textView.setTextColor(textColor);
                 } else {
                     mPopupWindow.showAsDropDown(DropdownMenu.this);
                     mPopupWindow.setOutsideTouchable(true);
-                    iconView.setText(ICON_DOWN);
+                    iconView.setText(ICON_UP);
 
                     if (highLightColor != -1) {
                         iconView.setTextColor(highLightColor);
