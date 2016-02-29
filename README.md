@@ -51,11 +51,15 @@ allprojects {
 }
 
 dependencies {
-    compile 'com.github.twiceyuan:DropdownMenu:1.1.5'
+    compile 'com.github.twiceyuan:DropdownMenu:1.1.6'
 }
 ```
 
 ## 更新日志
+
+### update 1.1.6
+
+优化下拉菜单标题的显示，在其长度过长时显示省略号。同时增加获得标题文本 TextView 的方法，方便使用时进一步微调
 
 ### update 1.1.5
 

@@ -23,7 +23,11 @@ import com.twiceyuan.dropdownmenu.OnDropdownItemClickListener;
  */
 public class DropdownListFragment extends Fragment {
 
-    final String[] HEROES = new String[]{"Iron Man", "Ant Man", "American Captain", "Hulk", "Thor", "Black Widow"};
+    final String[] HEROES = new String[]{
+            "Iron Man", "Ant Man", "American Captain",
+            "Hulk", "Thor", "Black Widow",
+            "一个长度特别长的用来测试最大长度的英雄"
+    };
     final String[] COLORS = new String[]{"Red", "Yellow", "Blue", "White"};
 
     @Nullable @Override

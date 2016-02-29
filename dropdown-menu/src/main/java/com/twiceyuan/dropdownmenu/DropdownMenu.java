@@ -36,8 +36,8 @@ public class DropdownMenu extends RelativeLayout {
     @SuppressWarnings("FieldCanBeLocal")
     private RelativeLayout              mShadowLayout;
     private OnDropdownItemClickListener mItemClickListener;
-    private TextView                    textView;
-    private FontIcon                    iconView;
+    private TextView                    mTextTitle;
+    private FontIcon                    mIconView;
     private DropdownAdapter             mDropdownAdapter;
     private OnClickListener             mSecondClickListener;
 
@@ -71,30 +71,18 @@ public class DropdownMenu extends RelativeLayout {
         mContext = context;
         // 初始化属性
         TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.DropdownMenu);
-        String titleText = attributes.getString(
-                R.styleable.DropdownMenu_titleText);
-        float textSize = attributes.getDimensionPixelSize(
-                R.styleable.DropdownMenu_titleTextSize, 0);
-        final int textColor = attributes.getColor(
-                R.styleable.DropdownMenu_titleColor,
-                0xff000000);
-        int titleBgColor = attributes.getColor(
-                R.styleable.DropdownMenu_titleBgColor,
-                0xffcccccc);
-        int listBgColor = attributes.getColor(
-                R.styleable.DropdownMenu_listBgColor,
-                0x00ffffff);
-        final int iconColor = attributes.getColor(
-                R.styleable.DropdownMenu_iconColor,
-                0xffcccccc);
-        final int highLightColor = attributes.getColor(
-                R.styleable.DropdownMenu_titleHighLight,
-                NO_HIGHLIGHT);
+        String titleText = attributes.getString(R.styleable.DropdownMenu_titleText);
+        float textSize = attributes.getDimensionPixelSize(R.styleable.DropdownMenu_titleTextSize, 0);
+        final int textColor = attributes.getColor(R.styleable.DropdownMenu_titleColor, 0xff000000);
+        int titleBgColor = attributes.getColor(R.styleable.DropdownMenu_titleBgColor, 0xffcccccc);
+        int listBgColor = attributes.getColor(R.styleable.DropdownMenu_listBgColor, 0x00ffffff);
+        final int iconColor = attributes.getColor(R.styleable.DropdownMenu_iconColor, 0xffcccccc);
+        final int highLightColor = attributes.getColor(R.styleable.DropdownMenu_titleHighLight, NO_HIGHLIGHT);
 
-        iconView = new FontIcon(mContext);
-        iconView.setTextColor(iconColor);
-        iconView.setGravity(Gravity.CENTER);
-        iconView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        mIconView = new FontIcon(mContext);
+        mIconView.setTextColor(iconColor);
+        mIconView.setGravity(Gravity.CENTER);
+        mIconView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 
         attributes.recycle();
 
@@ -103,7 +91,7 @@ public class DropdownMenu extends RelativeLayout {
         setGravity(Gravity.CENTER);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupWindow = inflater.inflate(R.layout.ddm_popup_list, (ViewGroup) getParent(), false);
+        View popupWindow = inflater.inflate(R.layout.ddm_popup, (ViewGroup) getParent(), false);
 
         mPopupWindow = new PopupWindow(popupWindow, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, true);
 
@@ -133,46 +121,47 @@ public class DropdownMenu extends RelativeLayout {
                 if (mItemClickListener != null) {
                     mItemClickListener.onItemClick(parent, view, position, id);
                 }
-                textView.setText(mDropdownAdapter.getTitleString(position));
+                mTextTitle.setText(mDropdownAdapter.getTitleString(position));
                 mPopupWindow.dismiss();
             }
         });
 
-        textView = new TextView(mContext);
+        mTextTitle = new TextView(mContext);
 
         LayoutParams titleParams = new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         titleParams.addRule(CENTER_IN_PARENT, TRUE);
-        textView.setLayoutParams(titleParams);
+        mTextTitle.setLayoutParams(titleParams);
 
-        textView.setText(TextUtils.isEmpty(titleText) ? "<请选择>" : titleText);
-        textView.setTextColor(textColor);
-        textView.setBackgroundColor(titleBgColor);
-        textView.setPadding(20, 0, 32, 0);
-        textView.setGravity(Gravity.CENTER);
+        mTextTitle.setText(TextUtils.isEmpty(titleText) ? "<请选择>" : titleText);
+        mTextTitle.setTextColor(textColor);
+        mTextTitle.setBackgroundColor(titleBgColor);
+        mTextTitle.setPadding(20, 0, 72, 0);
+        mTextTitle.setEllipsize(TextUtils.TruncateAt.END);
+        mTextTitle.setGravity(Gravity.CENTER);
         if (textSize > 0) {
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+            mTextTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         }
 
         LayoutParams iconParams = new LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         iconParams.addRule(ALIGN_PARENT_RIGHT, TRUE);
         iconParams.addRule(CENTER_VERTICAL, TRUE);
-        iconView.setLayoutParams(iconParams);
+        mIconView.setLayoutParams(iconParams);
 
-        iconView.setPadding(20, 12, 32, 0);
-        iconView.setGravity(Gravity.CENTER);
-        iconView.setText(ICON_DOWN);
+        mIconView.setPadding(20, 12, 32, 0);
+        mIconView.setGravity(Gravity.CENTER);
+        mIconView.setText(ICON_DOWN);
 
-        addView(textView);
-        addView(iconView);
+        addView(mTextTitle);
+        addView(mIconView);
 
         mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                iconView.setText(ICON_DOWN);
-                iconView.setTextColor(iconColor);
-                textView.setTextColor(textColor);
+                mIconView.setText(ICON_DOWN);
+                mIconView.setTextColor(iconColor);
+                mTextTitle.setTextColor(textColor);
             }
         });
 
@@ -181,17 +170,17 @@ public class DropdownMenu extends RelativeLayout {
             public void onClick(View v) {
                 if (mPopupWindow.isShowing()) {
                     mPopupWindow.dismiss();
-                    iconView.setText(ICON_DOWN);
-                    iconView.setTextColor(iconColor);
-                    textView.setTextColor(textColor);
+                    mIconView.setText(ICON_DOWN);
+                    mIconView.setTextColor(iconColor);
+                    mTextTitle.setTextColor(textColor);
                 } else {
                     mPopupWindow.showAsDropDown(DropdownMenu.this);
                     mPopupWindow.setOutsideTouchable(true);
-                    iconView.setText(ICON_UP);
+                    mIconView.setText(ICON_UP);
 
                     if (highLightColor != -1) {
-                        iconView.setTextColor(highLightColor);
-                        textView.setTextColor(highLightColor);
+                        mIconView.setTextColor(highLightColor);
+                        mTextTitle.setTextColor(highLightColor);
                     }
                 }
                 if (mSecondClickListener != null) {
@@ -245,7 +234,7 @@ public class DropdownMenu extends RelativeLayout {
      * @param title 内容
      */
     @SuppressWarnings("unused") public void setTitle(String title) {
-        textView.setText(title);
+        mTextTitle.setText(title);
     }
 
     /**
@@ -279,5 +268,12 @@ public class DropdownMenu extends RelativeLayout {
 
     public FixedHeightListView getListView() {
         return mListView;
+    }
+
+    /**
+     * 获取下拉菜单标题 TextView，方便对其设置属性
+     */
+    @SuppressWarnings("unused") public TextView getTitleView() {
+        return mTextTitle;
     }
 }
