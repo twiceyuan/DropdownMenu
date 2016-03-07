@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     package="com.twiceyuan.dropdownmenu"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <application android:supportsRtl="true"/>
+    <application
+        android:supportsRtl="true"
+        tools:ignore="GoogleAppIndexingWarning"/>
 
 </manifest>

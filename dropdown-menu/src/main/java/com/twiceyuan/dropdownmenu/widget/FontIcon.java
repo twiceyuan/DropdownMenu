@@ -31,11 +31,11 @@ public class FontIcon extends TextView {
         setTypeface(typeFace);
     }
 
-    public void setFontIconColor(int textColor) {
+    @SuppressWarnings("unused") public void setFontIconColor(int textColor) {
         this.setTextColor(textColor);
     }
 
-    public void setFontIconColor(ColorStateList colors) {
+    @SuppressWarnings("unused") public void setFontIconColor(ColorStateList colors) {
         this.setTextColor(colors);
     }
 }

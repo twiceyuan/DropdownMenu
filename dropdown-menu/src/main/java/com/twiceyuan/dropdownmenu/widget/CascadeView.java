@@ -61,6 +61,9 @@ public class CascadeView extends LinearLayout {
 
     /**
      * 设置左右比例
+     *
+     * @param left  左边占权重
+     * @param right 右边占权重
      */
     public void setScale(int left, int right) {
         setWeightSum(left + right);
@@ -70,22 +73,47 @@ public class CascadeView extends LinearLayout {
         mListView2.setLayoutParams(rightParams);
     }
 
+    /**
+     * 设置左侧适配器
+     *
+     * @param adapter 左侧适配器
+     */
     public void setLeftAdapter(ListAdapter adapter) {
         mListView1.setAdapter(adapter);
     }
 
+    /**
+     * 设置右侧适配器
+     *
+     * @param adapter 右侧适配器
+     */
     public void setRightAdapter(ListAdapter adapter) {
         mListView2.setAdapter(adapter);
     }
 
+    /**
+     * 设置左边选择事件回调
+     *
+     * @param listener 回调接口
+     */
     public void setLeftOnSelected(AdapterView.OnItemClickListener listener) {
         mListView1.setOnItemClickListener(listener);
     }
 
-    public void setRightOnSelected(AdapterView.OnItemClickListener listener) {
+    /**
+     * 设置右边选择事件回调
+     *
+     * @param listener 回调接口
+     */
+    @SuppressWarnings("unused") public void setRightOnSelected(AdapterView.OnItemClickListener listener) {
         mListView2.setOnItemClickListener(listener);
     }
 
+    /**
+     * 获得最终选择的 listView
+     *
+     * @return listView
+     */
     public ListView getFinalListView() {
         return mListView2;
     }
