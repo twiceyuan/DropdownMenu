@@ -44,6 +44,7 @@ task javadoc(type: Javadoc) {
 // build a jar with javadoc
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
+    //noinspection GroovyAccessibility
     from javadoc.destinationDir
 }
 
