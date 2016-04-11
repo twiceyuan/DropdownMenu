@@ -1,4 +1,5 @@
 # DropdownMenu View 
+[![Build Status](https://travis-ci.org/twiceyuan/DropdownMenu.svg?branch=master)](https://travis-ci.org/twiceyuan/DropdownMenu)
 [![](https://jitpack.io/v/twiceyuan/DropdownMenu.svg)](https://jitpack.io/#twiceyuan/DropdownMenu)
 <a href="http://www.methodscount.com/?lib=com.github.twiceyuan%3ADropdownMenu%3A1.1.6"><img src="https://img.shields.io/badge/Size-19 KB-e91e63.svg"></img></a>
 <a href="http://www.methodscount.com/?lib=com.github.twiceyuan%3ADropdownMenu%3A1.1.6"><img src="https://img.shields.io/badge/Methods count-167-e91e63.svg"></img></a>
