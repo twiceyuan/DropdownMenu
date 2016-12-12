@@ -20,6 +20,8 @@
         <attr name="iconColor"/>
         <attr name="listBgColor" format="color"/>
         <attr name="titleHighLight"/>
+        <attr name="drawableLeft" format="reference"/>
+        <attr name="drawablePadding" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="FixedHeightListView">

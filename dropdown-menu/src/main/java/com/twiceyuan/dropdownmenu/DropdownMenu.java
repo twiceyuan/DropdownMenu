@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -12,6 +13,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -45,6 +48,7 @@ public class DropdownMenu extends RelativeLayout {
     private static final String ICON_UP   = "\ue5c7";
 
     private static final int NO_HIGHLIGHT = -1; // 没有设置高亮色时的默认值
+    private int screenHeight;
 
     public DropdownMenu(Context context) {
         super(context);
@@ -69,6 +73,9 @@ public class DropdownMenu extends RelativeLayout {
 
     private void init(Context context, AttributeSet attrs) {
         mContext = context;
+        screenHeight = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();
+
+
         // 初始化属性
         TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.DropdownMenu);
         String titleText = attributes.getString(R.styleable.DropdownMenu_titleText);
@@ -78,6 +85,8 @@ public class DropdownMenu extends RelativeLayout {
         int listBgColor = attributes.getColor(R.styleable.DropdownMenu_listBgColor, 0x00ffffff);
         final int iconColor = attributes.getColor(R.styleable.DropdownMenu_iconColor, 0xffcccccc);
         final int highLightColor = attributes.getColor(R.styleable.DropdownMenu_titleHighLight, NO_HIGHLIGHT);
+        Drawable leftDrawable = attributes.getDrawable(R.styleable.DropdownMenu_drawableLeft);
+        float drawablePadding = attributes.getDimensionPixelSize(R.styleable.DropdownMenu_drawablePadding, 0);
 
         mIconView = new FontIcon(mContext);
         mIconView.setTextColor(iconColor);
@@ -97,11 +106,25 @@ public class DropdownMenu extends RelativeLayout {
 
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
-
+        mPopupWindow.setAnimationStyle(R.style.popwin_anim_style);
         // 不加这个在低版本（测试了 4.1）上会有外部点击事件不会响应的问题
         //noinspection deprecation
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-
+        //如果当前系统版本为7.0以上，则为PopupWindow指定固定高度
+        if (Build.VERSION.SDK_INT >= 24) {
+            ViewTreeObserver vto = getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    int[] location = new int[2];
+                    getLocationOnScreen(location);
+                    int x = location[0];
+                    final int y = location[1];
+                    mPopupWindow.setHeight(screenHeight - y - getHeight());
+                }
+            });
+        }
         mListView = (FixedHeightListView) popupWindow.findViewById(R.id.lv_menu);
         mListView.setBackgroundColor(listBgColor);
         mListView.setAdapter(mDropdownAdapter = new ArrayDropdownAdapter(
@@ -142,7 +165,11 @@ public class DropdownMenu extends RelativeLayout {
         if (textSize > 0) {
             mTextTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         }
-
+        if (leftDrawable != null) {
+            leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
+            mTextTitle.setCompoundDrawables(leftDrawable,null,null,null);
+            mTextTitle.setCompoundDrawablePadding((int) drawablePadding);
+        }
         LayoutParams iconParams = new LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         iconParams.addRule(ALIGN_PARENT_RIGHT, TRUE);
