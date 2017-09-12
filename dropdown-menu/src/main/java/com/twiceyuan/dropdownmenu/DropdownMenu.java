@@ -13,8 +13,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -23,6 +21,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.twiceyuan.dropdownmenu.widget.FixedPopupWindow;
 import com.twiceyuan.dropdownmenu.widget.FontIcon;
 
 /**
@@ -32,9 +31,11 @@ import com.twiceyuan.dropdownmenu.widget.FontIcon;
  */
 public class DropdownMenu extends RelativeLayout {
 
-    @SuppressWarnings("FieldCanBeLocal")
-    private Context                     mContext;
-    private PopupWindow                 mPopupWindow;
+    private static final String ICON_DOWN = "\ue5c5";
+    private static final String ICON_UP   = "\ue5c7";
+    private static final int NO_HIGHLIGHT = -1; // 没有设置高亮色时的默认值
+
+    private FixedPopupWindow            mPopupWindow;
     private FixedHeightListView         mListView;
     @SuppressWarnings("FieldCanBeLocal")
     private RelativeLayout              mShadowLayout;
@@ -43,12 +44,6 @@ public class DropdownMenu extends RelativeLayout {
     private FontIcon                    mIconView;
     private DropdownAdapter             mDropdownAdapter;
     private OnClickListener             mSecondClickListener;
-
-    private static final String ICON_DOWN = "\ue5c5";
-    private static final String ICON_UP   = "\ue5c7";
-
-    private static final int NO_HIGHLIGHT = -1; // 没有设置高亮色时的默认值
-    private int screenHeight;
 
     public DropdownMenu(Context context) {
         super(context);
@@ -72,10 +67,6 @@ public class DropdownMenu extends RelativeLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        mContext = context;
-        screenHeight = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();
-
-
         // 初始化属性
         TypedArray attributes = getContext().obtainStyledAttributes(attrs, R.styleable.DropdownMenu);
         String titleText = attributes.getString(R.styleable.DropdownMenu_titleText);
@@ -88,7 +79,7 @@ public class DropdownMenu extends RelativeLayout {
         Drawable leftDrawable = attributes.getDrawable(R.styleable.DropdownMenu_drawableLeft);
         float drawablePadding = attributes.getDimensionPixelSize(R.styleable.DropdownMenu_drawablePadding, 0);
 
-        mIconView = new FontIcon(mContext);
+        mIconView = new FontIcon(getContext());
         mIconView.setTextColor(iconColor);
         mIconView.setGravity(Gravity.CENTER);
         mIconView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
@@ -100,9 +91,9 @@ public class DropdownMenu extends RelativeLayout {
         setGravity(Gravity.CENTER);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupWindow = inflater.inflate(R.layout.ddm_popup, (ViewGroup) getParent(), false);
+        final View contentView = inflater.inflate(R.layout.ddm_popup, (ViewGroup) getParent(), false);
 
-        mPopupWindow = new PopupWindow(popupWindow, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, true);
+        mPopupWindow = new FixedPopupWindow(contentView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, true);
 
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
@@ -110,28 +101,13 @@ public class DropdownMenu extends RelativeLayout {
         // 不加这个在低版本（测试了 4.1）上会有外部点击事件不会响应的问题
         //noinspection deprecation
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        //如果当前系统版本为7.0以上，则为PopupWindow指定固定高度
-        if (Build.VERSION.SDK_INT >= 24) {
-            ViewTreeObserver vto = getViewTreeObserver();
-            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    int[] location = new int[2];
-                    getLocationOnScreen(location);
-                    int x = location[0];
-                    final int y = location[1];
-                    mPopupWindow.setHeight(screenHeight - y - getHeight());
-                }
-            });
-        }
-        mListView = (FixedHeightListView) popupWindow.findViewById(R.id.lv_menu);
+        mListView = contentView.findViewById(R.id.lv_menu);
         mListView.setBackgroundColor(listBgColor);
         mListView.setAdapter(mDropdownAdapter = new ArrayDropdownAdapter(
-                mContext,
+                getContext(),
                 android.R.layout.simple_dropdown_item_1line,
                 new String[]{"Empty"}));
-        mShadowLayout = (RelativeLayout) popupWindow.findViewById(R.id.rl_menu_shadow);
+        mShadowLayout = contentView.findViewById(R.id.rl_menu_shadow);
         mShadowLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +125,7 @@ public class DropdownMenu extends RelativeLayout {
             }
         });
 
-        mTextTitle = new TextView(mContext);
+        mTextTitle = new TextView(getContext());
 
         LayoutParams titleParams = new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -167,7 +143,7 @@ public class DropdownMenu extends RelativeLayout {
         }
         if (leftDrawable != null) {
             leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
-            mTextTitle.setCompoundDrawables(leftDrawable,null,null,null);
+            mTextTitle.setCompoundDrawables(leftDrawable, null, null, null);
             mTextTitle.setCompoundDrawablePadding((int) drawablePadding);
         }
         LayoutParams iconParams = new LayoutParams(
@@ -236,13 +212,14 @@ public class DropdownMenu extends RelativeLayout {
             final AbsListView customView,
             final OnDropdownItemClickListener listener) {
 
-        LinearLayout container = (LinearLayout) mPopupWindow.getContentView().findViewById(R.id.container);
+        LinearLayout container = mPopupWindow.getContentView().findViewById(R.id.container);
 
         container.removeAllViews();
         container.addView(contentView);
 
         customView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listener.onItemClick(parent, view, position, id);
                 if (mPopupWindow != null && mPopupWindow.isShowing()) {
                     Adapter adapter = parent.getAdapter();
@@ -260,21 +237,24 @@ public class DropdownMenu extends RelativeLayout {
      *
      * @param title 内容
      */
-    @SuppressWarnings("unused") public void setTitle(String title) {
+    @SuppressWarnings("unused")
+    public void setTitle(String title) {
         mTextTitle.setText(title);
     }
 
     /**
      * 下拉菜单是否在显示
      */
-    @SuppressWarnings("unused") public boolean isDropdown() {
+    @SuppressWarnings("unused")
+    public boolean isDropdown() {
         return mPopupWindow != null && mPopupWindow.isShowing();
     }
 
     /**
      * 如果存在，展开
      */
-    @SuppressWarnings("unused") public void expand() {
+    @SuppressWarnings("unused")
+    public void expand() {
         if (mPopupWindow != null) {
             mPopupWindow.showAsDropDown(this);
         }
@@ -300,7 +280,8 @@ public class DropdownMenu extends RelativeLayout {
     /**
      * 获取下拉菜单标题 TextView，方便对其设置属性
      */
-    @SuppressWarnings("unused") public TextView getTitleView() {
+    @SuppressWarnings("unused")
+    public TextView getTitleView() {
         return mTextTitle;
     }
 }
