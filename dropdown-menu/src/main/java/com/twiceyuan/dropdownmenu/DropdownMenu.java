@@ -101,13 +101,13 @@ public class DropdownMenu extends RelativeLayout {
         // 不加这个在低版本（测试了 4.1）上会有外部点击事件不会响应的问题
         //noinspection deprecation
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        mListView = contentView.findViewById(R.id.lv_menu);
+        mListView = (FixedHeightListView) contentView.findViewById(R.id.lv_menu);
         mListView.setBackgroundColor(listBgColor);
         mListView.setAdapter(mDropdownAdapter = new ArrayDropdownAdapter(
                 getContext(),
                 android.R.layout.simple_dropdown_item_1line,
                 new String[]{"Empty"}));
-        mShadowLayout = contentView.findViewById(R.id.rl_menu_shadow);
+        mShadowLayout = (RelativeLayout) contentView.findViewById(R.id.rl_menu_shadow);
         mShadowLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,7 +212,7 @@ public class DropdownMenu extends RelativeLayout {
             final AbsListView customView,
             final OnDropdownItemClickListener listener) {
 
-        LinearLayout container = mPopupWindow.getContentView().findViewById(R.id.container);
+        LinearLayout container = (LinearLayout) mPopupWindow.getContentView().findViewById(R.id.container);
 
         container.removeAllViews();
         container.addView(contentView);
