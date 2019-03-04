@@ -1,5 +1,3 @@
 <resources>
     <string name="app_name">DropdownMenu</string>
-    <string name="menu_list">列表</string>
-    <string name="menu_cascade">联动</string>
 </resources>

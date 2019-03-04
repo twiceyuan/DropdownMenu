@@ -2,46 +2,52 @@ package com.twiceyuan.ddmsample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.twiceyuan.dropdownmenu.widget.DropListContent;
+import com.twiceyuan.dropdownmenu.DropdownMenu;
+import com.twiceyuan.dropdownmenu.widget.TextViewHeader;
+
+import java.util.Arrays;
 
 public class SampleActivity extends AppCompatActivity {
 
-    private static final int MENU_LIST    = 1001;
-    private static final int MENU_CASCADE = 1002;
+    private final String[] HEROES = {
+            "Iron Man",
+            "Ant Man",
+            "American Captain",
+            "Hulk",
+            "Thor",
+            "Black Widow",
+            "一个长度特别长的用来测试最大长度的英雄"
+    };
+
+    private final String[] COLORS = {
+            "Red", "Yellow", "Blue", "White"
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new DropdownListFragment())
-                .commit();
-    }
+        TextView tvChooseHero = findViewById(R.id.tv_hero);
+        TextView tvChooseColor = findViewById(R.id.tv_color);
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item1 = menu.add(Menu.NONE, MENU_LIST, 0, R.string.menu_list);
-        MenuItem item2 = menu.add(Menu.NONE, MENU_CASCADE, 1, R.string.menu_cascade);
-        item1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        item2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        return super.onCreateOptionsMenu(menu);
-    }
+        final TextView textContent = findViewById(R.id.textContent);
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == MENU_LIST) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new DropdownListFragment())
-                    .commit();
-            return true;
-        }
+        DropdownMenu<String> heroChooser = new DropdownMenu.Builder<String>()
+                .header(new TextViewHeader(tvChooseHero))
+                .content(new DropListContent(this, Arrays.asList(HEROES)))
+                .build();
 
-        if (item.getItemId() == MENU_CASCADE) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new DropdownCascadeFragment())
-                    .commit();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        heroChooser.setOnChooseListener(textContent::setText);
+
+        DropdownMenu<String> colorChooser = new DropdownMenu.Builder<String>()
+                .header(new TextViewHeader(tvChooseColor))
+                .content(new DropListContent(this, Arrays.asList(COLORS)))
+                .build();
+
+        colorChooser.setOnChooseListener(textContent::setText);
     }
 }
