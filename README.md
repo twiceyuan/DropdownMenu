@@ -1,13 +1,7 @@
 # DropdownMenu View 
-[![Build Status](https://travis-ci.org/twiceyuan/DropdownMenu.svg?branch=master)](https://travis-ci.org/twiceyuan/DropdownMenu)
 [![](https://jitpack.io/v/twiceyuan/DropdownMenu.svg)](https://jitpack.io/#twiceyuan/DropdownMenu)
-<a href="http://www.methodscount.com/?lib=com.github.twiceyuan%3ADropdownMenu%3A1.1.6"><img src="https://img.shields.io/badge/Size-19 KB-e91e63.svg"></img></a>
-<a href="http://www.methodscount.com/?lib=com.github.twiceyuan%3ADropdownMenu%3A1.1.6"><img src="https://img.shields.io/badge/Methods count-167-e91e63.svg"></img></a>
 
-
-基于 ListView 和 PopupWindow 实现的下拉菜单，可以方便的配置样式和填充数据。
-
-（work in process: 本项目为学习使用，不保证使用稳定性，请慎重使用。）
+基于 PopupWindow 的下拉菜单控件，可以方便的配置样式和填充数据。
 
 <p align="center">
     <img src="art/screenshot.png" alt="screenshot" style="width: 200px;"/>
@@ -15,35 +9,17 @@
 
 ## 使用
 
-Layout 代码:
-
-```xml
-<com.twiceyuan.dropdownmenu.DropdownMenu
-    android:id="@+id/dm_dropdown"
-    android:layout_width="0dp"
-    android:layout_height="40dp"
-    android:layout_weight="1"
-    dm:highlightColor="@color/colorPrimary"
-    dm:iconColor="#777"
-    dm:titleBgColor="#eee"
-    dm:titleText="默认选项"
-    dm:titleTextSize="14"/>
-```
-
-Java 代码:
-
 ```java
-DropdownMenu menu = (DropdownMenu) findViewById(R.id.dm_dropdown);
-menu.setAdapter(new ArrayDropdownAdapter(this, R.layout.light_dropdown_item_1line, HEROES)); 
-menu.setOnItemClickListener(new OnDropdownItemClickListener() {
-    @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getApplicationContext(), HEROES[position], Toast.LENGTH_SHORT).show();
-    }
-});
-
-// 同时只允许一个 DropdownMenu 为打开状态
-MenuManager.group(menu, menu2);
+new DropdownMenu.Builder<String>()
+        .header(new TextViewHeader(tvChooseHero))                  // 默认头部交互
+        .content(new DropListContent(this, Arrays.asList(HEROES))) // 默认菜单样式
+        .build()
+        .setOnChooseListener(textContent::setText);
 ```
+
+自定义样式和交互：
+
+参考 `TextViewHeader` 和 `DropListContent` 实现
 
 ## 依赖
 
