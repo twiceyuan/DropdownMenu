@@ -4,7 +4,8 @@
 基于 PopupWindow 的下拉菜单控件，可以方便的配置样式和填充数据。
 
 <p align="center">
-    <img src="art/screenshot.png" alt="screenshot" style="width: 200px;"/>
+    <img src="art/screenshot1.png" alt="screenshot" style="width: 200px;"/>
+    <img src="art/screenshot2.png" alt="screenshot" style="width: 200px;"/>
 </p>
 
 ## 使用
