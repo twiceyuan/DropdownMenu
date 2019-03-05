@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.twiceyuan.dropdownmenu.widget.DropListContent;
+import com.twiceyuan.ddmsample.custom.AnimatedHeader;
+import com.twiceyuan.ddmsample.custom.CustomListContent;
 import com.twiceyuan.dropdownmenu.DropdownMenu;
+import com.twiceyuan.dropdownmenu.widget.DropListContent;
 import com.twiceyuan.dropdownmenu.widget.TextViewHeader;
 
 import java.util.Arrays;
@@ -32,22 +34,21 @@ public class SampleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView tvChooseHero = findViewById(R.id.tv_hero);
-        TextView tvChooseColor = findViewById(R.id.tv_color);
 
         final TextView textContent = findViewById(R.id.textContent);
 
-        DropdownMenu<String> heroChooser = new DropdownMenu.Builder<String>()
+        // 默认样式 + 默认头部
+        new DropdownMenu.Builder<String>()
                 .header(new TextViewHeader(tvChooseHero))
                 .content(new DropListContent(this, Arrays.asList(HEROES)))
-                .build();
+                .build()
+                .setOnChooseListener(textContent::setText);
 
-        heroChooser.setOnChooseListener(textContent::setText);
-
-        DropdownMenu<String> colorChooser = new DropdownMenu.Builder<String>()
-                .header(new TextViewHeader(tvChooseColor))
-                .content(new DropListContent(this, Arrays.asList(COLORS)))
-                .build();
-
-        colorChooser.setOnChooseListener(textContent::setText);
+        // 自定义样式 + 带动画指示器的头部
+        new DropdownMenu.Builder<String>()
+                .header(new AnimatedHeader(findViewById(R.id.layout_color_header)))
+                .content(new CustomListContent(this, Arrays.asList(COLORS)))
+                .build()
+                .setOnChooseListener(textContent::setText);
     }
 }

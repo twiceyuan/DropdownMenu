@@ -2,59 +2,47 @@ package com.twiceyuan.dropdownmenu.widget;
 
 import android.graphics.Typeface;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.twiceyuan.dropdownmenu.R;
 
 import java.util.List;
 
-public class DropListAdapter extends BaseAdapter {
+public class DropListAdapter extends BaseDropListAdapter<String, DropListAdapter.ViewHolder> {
 
-    private final List<String> mStrings;
-
-    private int selected = -1;
-
-    public DropListAdapter(List<String> strings) {
-        mStrings = strings;
-    }
-
-    public void setSelected(int selected) {
-        this.selected = selected;
-        notifyDataSetChanged();
+    DropListAdapter(List<String> strings) {
+        super(strings);
     }
 
     @Override
-    public int getCount() {
-        return mStrings.size();
+    protected ViewHolder createHolder(View rootView) {
+        return new ViewHolder(rootView);
     }
 
     @Override
-    public String getItem(int position) {
-        return mStrings.get(position);
+    protected int itemLayoutId() {
+        return R.layout.ddm_item_drop_list;
     }
 
     @Override
-    public long getItemId(int position) {
-        return mStrings.get(position).hashCode();
+    protected void onBindSelected(String text, ViewHolder holder) {
+        holder.mTextView.setTextColor(0xFF000000);
+        holder.mTextView.setText(text);
+        holder.mTextView.setTypeface(null, Typeface.BOLD);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = View.inflate(parent.getContext(), R.layout.ddm_item_drop_list, null);
+    protected void onBindNormal(String s, ViewHolder holder) {
+        holder.mTextView.setTextColor(0xFF444444);
+        holder.mTextView.setText(s);
+        holder.mTextView.setTypeface(null, Typeface.NORMAL);
+    }
+
+    static class ViewHolder {
+        TextView mTextView;
+
+        ViewHolder(View rootView) {
+            mTextView = rootView.findViewById(android.R.id.text1);
         }
-        TextView text = convertView.findViewById(android.R.id.text1);
-        text.setText(getItem(position));
-        if (selected == position) {
-            text.setTextColor(0xFF000000);
-            text.setTypeface(null, Typeface.BOLD);
-        } else {
-            text.setTextColor(0xFF444444);
-            text.setTypeface(null, Typeface.NORMAL);
-        }
-
-        return convertView;
     }
 }

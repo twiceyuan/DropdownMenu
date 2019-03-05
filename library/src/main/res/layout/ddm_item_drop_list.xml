@@ -9,6 +9,6 @@
     android:paddingTop="12dp"
     android:paddingRight="24dp"
     android:paddingBottom="12dp"
-    android:textColor="@color/selector_text_item_dropdown"
+    android:textColor="#333"
     android:textSize="14sp"
     tools:text="测试" />

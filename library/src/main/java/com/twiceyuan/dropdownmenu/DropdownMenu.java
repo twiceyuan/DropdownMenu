@@ -30,7 +30,7 @@ public class DropdownMenu<T> {
         }
 
         public DropdownMenu<T> build() {
-            return new DropdownMenu<T>(header, content);
+            return new DropdownMenu<>(header, content);
         }
     }
 
@@ -56,7 +56,10 @@ public class DropdownMenu<T> {
         mPopupWindow.setOutsideTouchable(true);
         mPopupWindow.setOnDismissListener(() -> header.onChange(false));
 
-        header.setupShowListener(v -> mPopupWindow.showAsDropDown(v));
+        header.setupShowListener(v -> {
+            header.onChange(true);
+            mPopupWindow.showAsDropDown(v);
+        });
     }
 
     public void setOnChooseListener(OnChooseListener<T> onChooseListener) {

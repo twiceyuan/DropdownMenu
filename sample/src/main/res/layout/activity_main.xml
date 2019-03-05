@@ -29,17 +29,31 @@
             android:layout_height="40dp"
             android:background="#eee" />
 
-        <TextView
-            android:id="@+id/tv_color"
+        <FrameLayout
+            android:id="@+id/layout_color_header"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_weight="1"
-            android:drawableRight="@drawable/ddm_ic_arrow_down"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="选择颜色"
-            android:textColor="@android:color/black" />
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_color"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="选择颜色"
+                android:textColor="@android:color/black" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/ddm_ic_arrow_down" />
+
+        </FrameLayout>
+
 
     </LinearLayout>
 

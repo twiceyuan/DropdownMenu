@@ -7,6 +7,7 @@ import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.twiceyuan.dropdownmenu.R;
 import com.twiceyuan.dropdownmenu.Utils;
 import com.twiceyuan.dropdownmenu.contract.DropdownContent;
 import com.twiceyuan.dropdownmenu.listener.OnChooseListener;
@@ -26,8 +27,11 @@ public class DropListContent implements DropdownContent<String> {
     @Override
     public View onCreateDropdownView(OnChooseListener<String> controller) {
         ListView listView = new ListView(mContext);
-        listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         DropListAdapter adapter = new DropListAdapter(mSelections);
+
+        listView.setDivider(mContext.getResources().getDrawable(R.drawable.ddm_list_divider));
+        listView.setDividerHeight(Utils.dp2px(1));
+        listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             adapter.setSelected(position);
