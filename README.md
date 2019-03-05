@@ -32,11 +32,16 @@ allprojects {
 }
 
 dependencies {
-    compile 'com.github.twiceyuan:DropdownMenu:1.1.6'
+    // get latest version from https://jitpack.io/#twiceyuan/DropdownMenu
+    implementation 'com.github.twiceyuan:DropdownMenu:$latest_version"
 }
 ```
 
 ## 更新日志
+
+### update 2.0.0-alpha
+
+重新设计（不兼容之前版本）
 
 ### update 1.1.6
 
